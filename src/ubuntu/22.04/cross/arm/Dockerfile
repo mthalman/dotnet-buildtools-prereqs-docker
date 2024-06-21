@@ -1,4 +1,11 @@
+FROM ubuntu.azurecr.io/ubuntu:22.04 AS init
+
+RUN touch foo
+
 FROM mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-22.04-crossdeps-local AS builder
+
+COPY --from=init /foo .
+
 ARG ROOTFS_DIR=/crossrootfs/arm
 
 # Obtain arcade scripts used to build rootfs
